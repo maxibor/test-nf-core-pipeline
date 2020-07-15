@@ -1,0 +1,11 @@
+name: nf-core action CI
+
+on: [push, pull_request]
+    
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: nf-core action CI
+      uses: maxibor/nf-core-gh-action@master
