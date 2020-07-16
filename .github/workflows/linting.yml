@@ -27,10 +27,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: nf-core CI
-      env:
-          GITHUB_COMMENTS_URL: ${{ github.event.pull_request.comments_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_PR_COMMIT: ${{ github.event.pull_request.head.sha }}
       uses: maxibor/nf-core-gh-action@master
       with:
           nextflow_version: '20.04.1'
