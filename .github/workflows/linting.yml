@@ -13,14 +13,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: maxibor/nf-core-gh-action@master
-        name: Run Markdownlint
+      - name: Run Markdownlint
         run: markdownlint ${GITHUB_WORKSPACE} -c ${GITHUB_WORKSPACE}/.github/markdownlint.yml
   YAML:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: maxibor/nf-core-gh-action@master
-        name: Run yaml-lint
+      - name: Run yaml-lint
         run: yamllint $(find ${GITHUB_WORKSPACE} -type f -name "*.yml")
   nf-core:
     runs-on: ubuntu-latest
@@ -30,7 +30,7 @@ jobs:
         with:
           nextflow_version: '20.04.1'
           nfcore_version: '1.9'
-        name: Run nf-core lint
+      - name: Run nf-core lint
         env:
           GITHUB_COMMENTS_URL: ${{ github.event.pull_request.comments_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
