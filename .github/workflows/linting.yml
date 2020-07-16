@@ -8,21 +8,35 @@ on:
     types: [published]
 
 jobs:
-  nf-core-linting:
+  Markdown:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: maxibor/nf-core-gh-action@master
-      with:
-        nextflow_version: '20.04.1'
-        nfcore_version: '1.9'
-    - name: Markdownlint
-      run: markdownlint ${GITHUB_WORKSPACE} -c ${GITHUB_WORKSPACE}/.github/markdownlint.yml
-    - name: yaml-lint
-      run: yamllint $(find ${GITHUB_WORKSPACE} -type f -name "*.yml")
-    - name: nf-core linting
-      env:
-        GITHUB_COMMENTS_URL: ${{ github.event.pull_request.comments_url }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GITHUB_PR_COMMIT: ${{ github.event.pull_request.head.sha }}
-      run: nf-core lint ${GITHUB_WORKSPACE}
+      - uses: actions/checkout@v2
+      - uses: maxibor/nf-core-gh-action@master
+      - name: Run Markdownlint
+        run: markdownlint ${GITHUB_WORKSPACE} -c ${GITHUB_WORKSPACE}/.github/markdownlint.yml
+  YAML:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: maxibor/nf-core-gh-action@master
+      - name: Run yaml-lint
+        run: yamllint $(find ${GITHUB_WORKSPACE} -type f -name "*.yml")
+  nf-core:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Check out pipeline code
+        uses: actions/checkout@v2
+
+      - uses: maxibor/nf-core-gh-action@master
+        with:
+          nextflow_version: '20.04.1'
+          nfcore_version: '1.9'
+          
+      - name: Run nf-core lint
+        env:
+          GITHUB_COMMENTS_URL: ${{ github.event.pull_request.comments_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_PR_COMMIT: ${{ github.event.pull_request.head.sha }}
+        run: nf-core lint ${GITHUB_WORKSPACE}
