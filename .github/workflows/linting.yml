@@ -8,26 +8,12 @@ on:
     types: [published]
 
 jobs:
-  Markdown:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: maxibor/nf-core-gh-action@master
-      - name: Run Markdownlint
-        run: markdownlint ${GITHUB_WORKSPACE} -c ${GITHUB_WORKSPACE}/.github/markdownlint.yml
-  YAML:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: maxibor/nf-core-gh-action@master
-      - name: Run yaml-lint
-        run: yamllint $(find ${GITHUB_WORKSPACE} -type f -name "*.yml")
   nf-core:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - name: nf-core CI
-      uses: maxibor/nf-core-gh-action@master
+      uses: maxibor/nf-core-gh-action@dev
       with:
           nextflow_version: '20.04.1'
           nfcore_version: '1.9'
